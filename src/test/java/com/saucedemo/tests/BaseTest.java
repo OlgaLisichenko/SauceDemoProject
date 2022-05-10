@@ -1,8 +1,6 @@
 package com.saucedemo.tests;
 
-import com.saucedemo.pages.LoginPage;
-import com.saucedemo.pages.ProductsListPage;
-import com.saucedemo.pages.SideMenu;
+import com.saucedemo.pages.*;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -17,6 +15,9 @@ public class BaseTest {
     protected LoginPage loginPage;
     protected ProductsListPage productsPage;
     protected SideMenu sideMenu;
+    protected CartPage cartPage;
+    protected CheckoutPage checkoutPage;
+    protected InformationPage informationPage;
 
     @BeforeMethod
     public void setUp() {
@@ -26,6 +27,9 @@ public class BaseTest {
         loginPage = new LoginPage(driver);
         productsPage = new ProductsListPage(driver);
         sideMenu = new SideMenu(driver);
+        cartPage = new CartPage(driver);
+        checkoutPage = new CheckoutPage(driver);
+        informationPage = new InformationPage(driver);
     }
 
     @AfterMethod
