@@ -3,6 +3,9 @@ package com.saucedemo.pages;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.Select;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ProductsListPage extends BasePage {
 
@@ -13,11 +16,13 @@ public class ProductsListPage extends BasePage {
     private By title = By.className("title");
     private By menuButton = By.id("react-burger-menu-btn");
     private By cartLink = By.className("shopping_cart_link");
-    private By addToCartButton = By.cssSelector("#add-to-cart-sauce-labs-bolt-t-shirt");
+    private By addToCartButton = By.tagName("button");
     private By cartBadge = By.cssSelector(".shopping_cart_badge");
-    private By name = By.cssSelector(".inventory_item_name");
-    private By desc = By.cssSelector(".inventory_item_desc");
+    private By productName = By.cssSelector(".inventory_item_name");
+    private By productDesc = By.cssSelector(".inventory_item_desc");
     private By price = By.cssSelector(".inventory_item_price");
+    private By productsList = By.cssSelector(".inventory_item");
+    private By select = By.tagName("select");
 
     public String getPageTitle() {
         return driver.findElement(title).getText();
@@ -42,7 +47,7 @@ public class ProductsListPage extends BasePage {
     }
 
     public WebElement getAddToCart() {
-        return driver.findElement(addToCartButton);
+        return getSelectedProduct().findElement(addToCartButton);
     }
 
     public ProductsListPage clickAddToCart() {
@@ -58,15 +63,48 @@ public class ProductsListPage extends BasePage {
         return getCartBadge().getText();
     }
 
+    public List<WebElement> getProducts() {
+        return driver.findElements(productsList);
+    }
+
+    public WebElement getSelectedProduct() {
+        return getProducts().get(4);
+    }
+
     public String getName() {
-        return driver.findElement(name).getText();
+        return getSelectedProduct().findElement(productName).getText();
     }
 
     public String getDescription() {
-        return driver.findElement(desc).getText();
+        return getSelectedProduct().findElement(productDesc).getText();
     }
 
     public String getPrice() {
-        return driver.findElement(price).getText();
+        return getSelectedProduct().findElement(price).getText();
+    }
+
+    public Select getSelect() {
+        return new Select(driver.findElement(select));
+    }
+
+    public void selectValue(String value) {
+        getSelect().selectByVisibleText(value);
+    }
+
+    public List<String> getProductsNames() {
+        List<String> names = new ArrayList<>();
+        for (WebElement product: getProducts()) {
+            names.add(product.findElement(productName).getText());
+        }
+        return names;
+    }
+
+    public List<Double> getProductsPrices() {
+        List<Double> prices = new ArrayList<>();
+        for (WebElement product: getProducts()) {
+            prices.add(Double.parseDouble(product.findElement(price).getText().replace("$", "")));
+        }
+        return prices;
     }
 }
+

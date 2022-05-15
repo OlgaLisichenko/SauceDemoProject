@@ -24,6 +24,7 @@ public class BaseTest {
         WebDriverManager.chromedriver().setup();
         driver = new ChromeDriver();
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+        driver.manage().window().maximize();
         loginPage = new LoginPage(driver);
         productsPage = new ProductsListPage(driver);
         sideMenu = new SideMenu(driver);

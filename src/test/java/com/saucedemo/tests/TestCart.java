@@ -27,12 +27,17 @@ public class TestCart extends BaseTest {
     public void testAddRemoveItem() {
         loginPage.openPage();
         loginPage.loginWithDefaultUser();
+
+        String expectedProductName = productsPage.getName();
+        String expectedDescription = productsPage.getDescription();
+        String expectedPrice = productsPage.getPrice();
+
         productsPage.clickAddToCart();
         Assert.assertEquals(productsPage.numberCartBadge(), "1"); //Проверка отображения количества товаров в корзине.
         productsPage.clickCartLink();
-        Assert.assertEquals(productsPage.getName(), cartPage.getName()); //Проверка правильности отображения названия товара.
-        Assert.assertEquals(productsPage.getDescription(), cartPage.getDescription()); //Проверка правильности отображения описания товара.
-        Assert.assertEquals(productsPage.getPrice(), cartPage.getPrice()); //Проверка правильности отображения цены товара.
+        Assert.assertEquals(cartPage.getName(), expectedProductName); //Проверка правильности отображения названия товара.
+        Assert.assertEquals(cartPage.getDescription(), expectedDescription); //Проверка правильности отображения описания товара.
+        Assert.assertEquals(cartPage.getPrice(), expectedPrice); //Проверка правильности отображения цены товара.
         cartPage.clickRemoveButton();
         Assert.assertFalse(cartPage.getRemovedItem().isDisplayed()); //Проверка на отсутствие информации о товаре после его удаления.
     }

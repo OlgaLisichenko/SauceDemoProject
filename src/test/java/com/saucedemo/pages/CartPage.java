@@ -13,7 +13,7 @@ public class CartPage extends BasePage {
     private By title = By.className("title");
     private By continueShoppingButton = By.id("continue-shopping");
     private By checkoutButton = By.id("checkout");
-    private By removeButton = By.id("remove-sauce-labs-bolt-t-shirt");
+    private By removeButton = By.xpath("//button[text()='Remove']");
     private By name = By.cssSelector(".inventory_item_name");
     private By desc = By.cssSelector(".inventory_item_desc");
     private By price = By.cssSelector(".inventory_item_price");
