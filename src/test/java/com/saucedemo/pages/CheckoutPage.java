@@ -10,16 +10,12 @@ public class CheckoutPage extends BasePage {
         super(driver);
     }
 
-    private By title = By.className("title");
     private By cancelButton = By.id("cancel");
     private By continueButton = By.id("continue");
     private By cartLink = By.className("shopping_cart_link");
     private By firstNameField = By.id("first-name");
     private By lastNameField = By.id("last-name");
-
-    public String getPageTitle() {
-        return driver.findElement(title).getText();
-    }
+    private By errorMessage = By.xpath("//h3");
 
     public WebElement getCancelButton() {
         return driver.findElement(cancelButton);
@@ -56,5 +52,9 @@ public class CheckoutPage extends BasePage {
     public CheckoutPage setLastName(String lastName) {
         driver.findElement(lastNameField).sendKeys(lastName);
         return this;
+    }
+
+    public String getErrorMessage() {
+        return driver.findElement(errorMessage).getText();
     }
 }

@@ -10,7 +10,6 @@ public class CartPage extends BasePage {
         super(driver);
     }
 
-    private By title = By.className("title");
     private By continueShoppingButton = By.id("continue-shopping");
     private By checkoutButton = By.id("checkout");
     private By removeButton = By.xpath("//button[text()='Remove']");
@@ -18,10 +17,6 @@ public class CartPage extends BasePage {
     private By desc = By.cssSelector(".inventory_item_desc");
     private By price = By.cssSelector(".inventory_item_price");
     private By removedItem = By.cssSelector(".removed_cart_item");
-
-    public String getPageTitle() {
-        return driver.findElement(title).getText();
-    }
 
     public WebElement getContinueShoppingButton() {
         return driver.findElement(continueShoppingButton);
@@ -36,18 +31,18 @@ public class CartPage extends BasePage {
         return driver.findElement(checkoutButton);
     }
 
-    public CartPage clickCheckoutButton() {
+    public CheckoutPage clickCheckoutButton() {
         getCheckoutButton().click();
-        return this;
+        return new CheckoutPage(driver);
     }
 
     public WebElement getRemoveButton() {
         return driver.findElement(removeButton);
     }
 
-    public CheckoutPage clickRemoveButton() {
+    public CartPage clickRemoveButton() {
         getRemoveButton().click();
-        return new CheckoutPage(driver);
+        return this;
     }
 
     public String getName() {

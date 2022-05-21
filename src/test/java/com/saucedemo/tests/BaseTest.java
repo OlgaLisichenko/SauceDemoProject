@@ -13,11 +13,6 @@ public class BaseTest {
 
     private WebDriver driver;
     protected LoginPage loginPage;
-    protected ProductsListPage productsPage;
-    protected SideMenu sideMenu;
-    protected CartPage cartPage;
-    protected CheckoutPage checkoutPage;
-    protected InformationPage informationPage;
 
     @BeforeMethod
     public void setUp() {
@@ -26,11 +21,6 @@ public class BaseTest {
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         driver.manage().window().maximize();
         loginPage = new LoginPage(driver);
-        productsPage = new ProductsListPage(driver);
-        sideMenu = new SideMenu(driver);
-        cartPage = new CartPage(driver);
-        checkoutPage = new CheckoutPage(driver);
-        informationPage = new InformationPage(driver);
     }
 
     @AfterMethod

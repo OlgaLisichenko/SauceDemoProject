@@ -1,6 +1,7 @@
 package com.saucedemo.tests;
 
 import com.saucedemo.pages.LoginPage;
+import com.saucedemo.pages.ProductsListPage;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -9,7 +10,7 @@ public class TestLogin extends BaseTest {
     @Test
     public void testSuccessLogin() {
         loginPage.openPage();
-        loginPage.loginWithDefaultUser();
+        ProductsListPage productsPage = loginPage.loginWithDefaultUser();
         Assert.assertEquals(productsPage.getPageTitle(),"PRODUCTS");
     }
 
@@ -44,7 +45,7 @@ public class TestLogin extends BaseTest {
     @Test
     public void testPerformanceGlitchUser() {
         loginPage.openPage();
-        loginPage.login("performance_glitch_user", LoginPage.DEFAULT_PASSWORD);
+        ProductsListPage productsPage = loginPage.login("performance_glitch_user", LoginPage.DEFAULT_PASSWORD);
         Assert.assertEquals(productsPage.getPageTitle(), "PRODUCTS");
     }
 }

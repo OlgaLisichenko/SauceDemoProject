@@ -13,7 +13,6 @@ public class ProductsListPage extends BasePage {
         super(driver);
     }
 
-    private By title = By.className("title");
     private By menuButton = By.id("react-burger-menu-btn");
     private By cartLink = By.className("shopping_cart_link");
     private By addToCartButton = By.tagName("button");
@@ -23,10 +22,6 @@ public class ProductsListPage extends BasePage {
     private By price = By.cssSelector(".inventory_item_price");
     private By productsList = By.cssSelector(".inventory_item");
     private By select = By.tagName("select");
-
-    public String getPageTitle() {
-        return driver.findElement(title).getText();
-    }
 
     public WebElement getMenuButton() {
         return driver.findElement(menuButton);
