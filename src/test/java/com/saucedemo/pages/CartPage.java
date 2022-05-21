@@ -3,6 +3,8 @@ package com.saucedemo.pages;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class CartPage extends BasePage {
 
@@ -59,5 +61,10 @@ public class CartPage extends BasePage {
 
     public WebElement getRemovedItem() {
         return driver.findElement(removedItem);
+    }
+
+    WebDriverWait wait = new WebDriverWait(driver, 10);
+    public void waitCartPageLoading() {
+        wait.until(ExpectedConditions.urlToBe("https://www.saucedemo.com/cart.html"));
     }
 }

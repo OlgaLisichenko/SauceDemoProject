@@ -12,6 +12,7 @@ public class TestLogout extends BaseTest {
         loginPage.openPage();
         ProductsListPage productsPage = loginPage.loginWithDefaultUser();
         SideMenu sideMenu = productsPage.clickMenuButton();
+        sideMenu.waitElement();
         sideMenu.clickLogoutLink();
         Assert.assertEquals(loginPage.Url(), "https://www.saucedemo.com/");
     }

@@ -13,6 +13,7 @@ public class TestProducts extends BaseTest{
     public void testSortingBySelector() {
         loginPage.openPage();
         ProductsListPage productsPage = loginPage.loginWithDefaultUser();
+        productsPage.waitProductPageLoading();
 
         List<String> initialNames = productsPage.getProductsNames();
 
