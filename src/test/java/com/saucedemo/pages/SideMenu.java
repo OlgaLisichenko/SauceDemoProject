@@ -10,10 +10,10 @@ public class SideMenu extends BasePage{
         super(driver);
     }
 
-    public By logoutLink = By.id("logout_sidebar_link");
+    private By logoutLink = By.id("logout_sidebar_link");
 
     public WebElement getLogoutLink() {
-        return  driver.findElement(logoutLink);
+        return driver.findElement(logoutLink);
     }
 
     public LoginPage clickLogoutLink() {
