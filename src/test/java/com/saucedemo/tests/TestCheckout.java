@@ -1,5 +1,8 @@
 package com.saucedemo.tests;
 
+import com.saucedemo.pages.CartPage;
+import com.saucedemo.pages.CheckoutPage;
+import com.saucedemo.pages.ProductsListPage;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -8,9 +11,9 @@ public class TestCheckout extends BaseTest {
     @Test //Проверка кнопки "Cancel".
     public void testCancelButton() {
         loginPage.openPage();
-        loginPage.loginWithDefaultUser();
-        productsPage.clickCartLink();
-        cartPage.clickCheckoutButton();
+        ProductsListPage productsPage = loginPage.loginWithDefaultUser();
+        CartPage cartPage = productsPage.clickCartLink();
+        CheckoutPage checkoutPage = cartPage.clickCheckoutButton();
         checkoutPage.clickCancelButton();
         Assert.assertEquals(cartPage.getPageTitle(), "YOUR CART");
     }
@@ -18,19 +21,19 @@ public class TestCheckout extends BaseTest {
     @Test //Проверка кнопки "Continue".
     public void testContinueButton() {
         loginPage.openPage();
-        loginPage.loginWithDefaultUser();
-        productsPage.clickCartLink();
-        cartPage.clickCheckoutButton();
+        ProductsListPage productsPage = loginPage.loginWithDefaultUser();
+        CartPage cartPage = productsPage.clickCartLink();
+        CheckoutPage checkoutPage = cartPage.clickCheckoutButton();
         checkoutPage.clickContinueButton();
-        Assert.assertEquals(informationPage.getErrorMessage(), "Error: First Name is required");
+        Assert.assertEquals(checkoutPage.getErrorMessage(), "Error: First Name is required");
     }
 
     @Test //Проверка ссылки "Cart".
     public void testCartLink() {
         loginPage.openPage();
-        loginPage.loginWithDefaultUser();
-        productsPage.clickCartLink();
-        cartPage.clickCheckoutButton();
+        ProductsListPage productsPage = loginPage.loginWithDefaultUser();
+        CartPage cartPage = productsPage.clickCartLink();
+        CheckoutPage checkoutPage = cartPage.clickCheckoutButton();
         checkoutPage.clickCartLink();
         Assert.assertEquals(cartPage.getPageTitle(), "YOUR CART");
     }
@@ -38,12 +41,12 @@ public class TestCheckout extends BaseTest {
     @Test //Проверка нажатия кнопки "Continue" при незаполненном поле "Zip/Postal Code".
     public void test() {
         loginPage.openPage();
-        loginPage.loginWithDefaultUser();
-        productsPage.clickCartLink();
-        cartPage.clickCheckoutButton();
+        ProductsListPage productsPage = loginPage.loginWithDefaultUser();
+        CartPage cartPage = productsPage.clickCartLink();
+        CheckoutPage checkoutPage = cartPage.clickCheckoutButton();
         checkoutPage.setFirstName("qwerty");
         checkoutPage.setLastName("abcd");
         checkoutPage.clickContinueButton();
-        Assert.assertEquals(informationPage.getErrorMessage(), "Error: Postal Code is required");
+        Assert.assertEquals(checkoutPage.getErrorMessage(), "Error: Postal Code is required");
     }
 }

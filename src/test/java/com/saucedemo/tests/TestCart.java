@@ -1,5 +1,8 @@
 package com.saucedemo.tests;
 
+import com.saucedemo.pages.CartPage;
+import com.saucedemo.pages.CheckoutPage;
+import com.saucedemo.pages.ProductsListPage;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -8,8 +11,8 @@ public class TestCart extends BaseTest {
     @Test  //Проверка кнопки "Continue Shopping".
     public void testContinueShoppingButton() {
         loginPage.openPage();
-        loginPage.loginWithDefaultUser();
-        productsPage.clickCartLink();
+        ProductsListPage productsPage = loginPage.loginWithDefaultUser();
+        CartPage cartPage = productsPage.clickCartLink();
         cartPage.clickContinueShoppingButton();
         Assert.assertEquals(productsPage.getPageTitle(), "PRODUCTS");
     }
@@ -17,16 +20,16 @@ public class TestCart extends BaseTest {
     @Test //Проверка кнопки "Checkout".
     public void testCheckoutButton() {
         loginPage.openPage();
-        loginPage.loginWithDefaultUser();
-        productsPage.clickCartLink();
-        cartPage.clickCheckoutButton();
+        ProductsListPage productsPage = loginPage.loginWithDefaultUser();
+        CartPage cartPage = productsPage.clickCartLink();
+        CheckoutPage checkoutPage = cartPage.clickCheckoutButton();
         Assert.assertEquals(checkoutPage.getPageTitle(), "CHECKOUT: YOUR INFORMATION");
     }
 
     @Test  //Проверка возможности добавления товара в корзину и его удаления.
     public void testAddRemoveItem() {
         loginPage.openPage();
-        loginPage.loginWithDefaultUser();
+        ProductsListPage productsPage = loginPage.loginWithDefaultUser();
 
         String expectedProductName = productsPage.getName();
         String expectedDescription = productsPage.getDescription();
@@ -34,7 +37,7 @@ public class TestCart extends BaseTest {
 
         productsPage.clickAddToCart();
         Assert.assertEquals(productsPage.numberCartBadge(), "1"); //Проверка отображения количества товаров в корзине.
-        productsPage.clickCartLink();
+        CartPage cartPage = productsPage.clickCartLink();
         Assert.assertEquals(cartPage.getName(), expectedProductName); //Проверка правильности отображения названия товара.
         Assert.assertEquals(cartPage.getDescription(), expectedDescription); //Проверка правильности отображения описания товара.
         Assert.assertEquals(cartPage.getPrice(), expectedPrice); //Проверка правильности отображения цены товара.

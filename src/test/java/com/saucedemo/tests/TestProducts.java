@@ -1,5 +1,6 @@
 package com.saucedemo.tests;
 
+import com.saucedemo.pages.ProductsListPage;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -11,7 +12,7 @@ public class TestProducts extends BaseTest{
     @Test // Проверка правильности сортировки по значениям дропдауна
     public void testSortingBySelector() {
         loginPage.openPage();
-        loginPage.loginWithDefaultUser();
+        ProductsListPage productsPage = loginPage.loginWithDefaultUser();
 
         List<String> initialNames = productsPage.getProductsNames();
 
