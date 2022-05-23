@@ -26,6 +26,8 @@ public class ProductsListPage extends BasePage {
     private By productsList = By.cssSelector(".inventory_item");
     private By select = By.tagName("select");
 
+    public static final String EXPECTED_PAGE_TITLE = "PRODUCTS";
+
     public WebElement getMenuButton() {
         return driver.findElement(menuButton);
     }
@@ -44,15 +46,6 @@ public class ProductsListPage extends BasePage {
         return new CartPage(driver);
     }
 
-    public WebElement getAddToCart() {
-        return getSelectedProduct().findElement(addToCartButton);
-    }
-
-    public ProductsListPage clickAddToCart() {
-        getAddToCart().click();
-        return this;
-    }
-
     public WebElement getCartBadge() {
         return driver.findElement(cartBadge);
     }
@@ -65,20 +58,29 @@ public class ProductsListPage extends BasePage {
         return driver.findElements(productsList);
     }
 
-    public WebElement getSelectedProduct() {
-        return getProducts().get(4);
+    public WebElement getSelectedProduct(int index) {
+        return getProducts().get(index);
     }
 
-    public String getName() {
-        return getSelectedProduct().findElement(productName).getText();
+    public WebElement getAddToCart(int index) {
+        return getSelectedProduct(index).findElement(addToCartButton);
     }
 
-    public String getDescription() {
-        return getSelectedProduct().findElement(productDesc).getText();
+    public ProductsListPage clickAddToCart(int index) {
+        getAddToCart(index).click();
+        return this;
     }
 
-    public String getPrice() {
-        return getSelectedProduct().findElement(price).getText();
+    public String getName(int index) {
+        return getSelectedProduct(index).findElement(productName).getText();
+    }
+
+    public String getDescription(int index) {
+        return getSelectedProduct(index).findElement(productDesc).getText();
+    }
+
+    public String getPrice(int index) {
+        return getSelectedProduct(index).findElement(price).getText();
     }
 
     public Select getSelect() {

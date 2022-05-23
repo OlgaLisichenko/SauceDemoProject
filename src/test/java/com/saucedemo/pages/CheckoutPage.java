@@ -19,6 +19,8 @@ public class CheckoutPage extends BasePage {
     private By lastNameField = By.id("last-name");
     private By errorMessage = By.xpath("//h3");
 
+    public static final String EXPECTED_PAGE_TITLE = "CHECKOUT: YOUR INFORMATION";
+
     public WebElement getCancelButton() {
         return driver.findElement(cancelButton);
     }

@@ -15,7 +15,7 @@ public class TestCart extends BaseTest {
         CartPage cartPage = productsPage.clickCartLink();
         cartPage.clickContinueShoppingButton();
         productsPage.waitProductPageLoading();
-        Assert.assertEquals(productsPage.getPageTitle(), "PRODUCTS");
+        Assert.assertEquals(productsPage.getPageTitle(), ProductsListPage.EXPECTED_PAGE_TITLE);
     }
 
     @Test //Проверка кнопки "Checkout".
@@ -25,7 +25,7 @@ public class TestCart extends BaseTest {
         CartPage cartPage = productsPage.clickCartLink();
         CheckoutPage checkoutPage = cartPage.clickCheckoutButton();
         checkoutPage.waitCheckoutPageLoading();
-        Assert.assertEquals(checkoutPage.getPageTitle(), "CHECKOUT: YOUR INFORMATION");
+        Assert.assertEquals(checkoutPage.getPageTitle(), CheckoutPage.EXPECTED_PAGE_TITLE);
     }
 
     @Test  //Проверка возможности добавления товара в корзину и его удаления.
@@ -33,18 +33,19 @@ public class TestCart extends BaseTest {
         loginPage.openPage();
         ProductsListPage productsPage = loginPage.loginWithDefaultUser();
 
-        String expectedProductName = productsPage.getName();
-        String expectedDescription = productsPage.getDescription();
-        String expectedPrice = productsPage.getPrice();
+        String expectedProductName = productsPage.getName(0);
+        String expectedDescription = productsPage.getDescription(0);
+        String expectedPrice = productsPage.getPrice(0);
 
-        productsPage.clickAddToCart();
+        productsPage.clickAddToCart(0);
         Assert.assertEquals(productsPage.numberCartBadge(), "1"); //Проверка отображения количества товаров в корзине.
         CartPage cartPage = productsPage.clickCartLink();
         cartPage.waitCartPageLoading();
         Assert.assertEquals(cartPage.getName(), expectedProductName); //Проверка правильности отображения названия товара.
         Assert.assertEquals(cartPage.getDescription(), expectedDescription); //Проверка правильности отображения описания товара.
         Assert.assertEquals(cartPage.getPrice(), expectedPrice); //Проверка правильности отображения цены товара.
-        cartPage.clickRemoveButton();
-        Assert.assertFalse(cartPage.getRemovedItem().isDisplayed()); //Проверка на отсутствие информации о товаре после его удаления.
+        cartPage.clickRemoveButton(0);
+        //Assert.assertFalse(cartPage.getRemovedItem().isDisplayed()); //Проверка на отсутствие информации о товаре после его удаления.
+        Assert.assertEquals(cartPage.getProductNamesList().size(), 0);
     }
 }
