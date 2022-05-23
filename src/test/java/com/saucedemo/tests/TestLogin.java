@@ -11,6 +11,7 @@ public class TestLogin extends BaseTest {
     public void testSuccessLogin() {
         loginPage.openPage();
         ProductsListPage productsPage = loginPage.loginWithDefaultUser();
+        productsPage.waitPageTitleLoading();
         Assert.assertEquals(productsPage.getPageTitle(),"PRODUCTS");
     }
 
@@ -18,6 +19,7 @@ public class TestLogin extends BaseTest {
     public void testEmptyPassword() {
         loginPage.openPage();
         loginPage.setUserName(LoginPage.STANDARD_USER).setPassword("").clickLogin();
+        loginPage.waitMessageEmptyPassword();
         Assert.assertEquals(loginPage.getErrorMessage(), "Epic sadface: Password is required");
     }
 
@@ -25,6 +27,7 @@ public class TestLogin extends BaseTest {
     public void testFailedLogin() {
         loginPage.openPage();
         loginPage.login("aaaa", "1111");
+        loginPage.waitMessageFailedLogin();
         Assert.assertEquals(loginPage.getErrorMessage(), "Epic sadface: Username and password do not match any user in this service");
     }
 
@@ -32,6 +35,7 @@ public class TestLogin extends BaseTest {
     public void testEmptyUserName() {
         loginPage.openPage();
         loginPage.login("", LoginPage.DEFAULT_PASSWORD);
+        loginPage.waitMessageEmptyUser();
         Assert.assertEquals(loginPage.getErrorMessage(), "Epic sadface: Username is required");
     }
 
@@ -39,6 +43,7 @@ public class TestLogin extends BaseTest {
     public void testLockedOutUser() {
         loginPage.openPage();
         loginPage.login("locked_out_user", LoginPage.DEFAULT_PASSWORD);
+        loginPage.waitMessageLockedOutUser();
         Assert.assertEquals(loginPage.getErrorMessage(), "Epic sadface: Sorry, this user has been locked out.");
     }
 
@@ -46,6 +51,7 @@ public class TestLogin extends BaseTest {
     public void testPerformanceGlitchUser() {
         loginPage.openPage();
         ProductsListPage productsPage = loginPage.login("performance_glitch_user", LoginPage.DEFAULT_PASSWORD);
+        productsPage.waitProductPageLoading();
         Assert.assertEquals(productsPage.getPageTitle(), "PRODUCTS");
     }
 }

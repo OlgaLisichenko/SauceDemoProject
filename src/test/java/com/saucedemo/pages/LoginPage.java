@@ -3,6 +3,8 @@ package com.saucedemo.pages;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class LoginPage extends BasePage{
     public LoginPage(WebDriver driver) {
@@ -56,5 +58,22 @@ public class LoginPage extends BasePage{
 
     public ProductsListPage loginWithDefaultUser() {
         return login(STANDARD_USER, DEFAULT_PASSWORD);
+    }
+
+    WebDriverWait wait = new WebDriverWait(driver, 10);
+    public void waitMessageEmptyPassword() {
+        wait.until(ExpectedConditions.textToBe(errorMessage, "Epic sadface: Password is required"));
+    }
+
+    public void waitMessageLockedOutUser() {
+        wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath("//h3"))));
+    }
+
+    public void waitMessageEmptyUser() {
+        wait.until(ExpectedConditions.textToBe(errorMessage, "Epic sadface: Username is required"));
+    }
+
+    public void waitMessageFailedLogin() {
+        wait.until(ExpectedConditions.visibilityOfElementLocated(errorMessage));
     }
 }

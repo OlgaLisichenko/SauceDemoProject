@@ -15,6 +15,7 @@ public class TestCheckout extends BaseTest {
         CartPage cartPage = productsPage.clickCartLink();
         CheckoutPage checkoutPage = cartPage.clickCheckoutButton();
         checkoutPage.clickCancelButton();
+        cartPage.waitCartPageLoading();
         Assert.assertEquals(cartPage.getPageTitle(), "YOUR CART");
     }
 
@@ -25,6 +26,7 @@ public class TestCheckout extends BaseTest {
         CartPage cartPage = productsPage.clickCartLink();
         CheckoutPage checkoutPage = cartPage.clickCheckoutButton();
         checkoutPage.clickContinueButton();
+        checkoutPage.waitMessageLoading();
         Assert.assertEquals(checkoutPage.getErrorMessage(), "Error: First Name is required");
     }
 
@@ -35,6 +37,7 @@ public class TestCheckout extends BaseTest {
         CartPage cartPage = productsPage.clickCartLink();
         CheckoutPage checkoutPage = cartPage.clickCheckoutButton();
         checkoutPage.clickCartLink();
+        cartPage.waitCartPageLoading();
         Assert.assertEquals(cartPage.getPageTitle(), "YOUR CART");
     }
 
@@ -47,6 +50,7 @@ public class TestCheckout extends BaseTest {
         checkoutPage.setFirstName("qwerty");
         checkoutPage.setLastName("abcd");
         checkoutPage.clickContinueButton();
+        checkoutPage.waitErrorMessage();
         Assert.assertEquals(checkoutPage.getErrorMessage(), "Error: Postal Code is required");
     }
 }
