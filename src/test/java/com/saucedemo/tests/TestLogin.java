@@ -12,7 +12,7 @@ public class TestLogin extends BaseTest {
         loginPage.openPage();
         ProductsListPage productsPage = loginPage.loginWithDefaultUser();
         productsPage.waitPageTitleLoading();
-        Assert.assertEquals(productsPage.getPageTitle(),"PRODUCTS");
+        Assert.assertEquals(productsPage.getPageTitle(),ProductsListPage.EXPECTED_PAGE_TITLE);
     }
 
     @Test
@@ -28,7 +28,8 @@ public class TestLogin extends BaseTest {
         loginPage.openPage();
         loginPage.login("aaaa", "1111");
         loginPage.waitMessageFailedLogin();
-        Assert.assertEquals(loginPage.getErrorMessage(), "Epic sadface: Username and password do not match any user in this service");
+        Assert.assertEquals(loginPage.getErrorMessage(),
+                "Epic sadface: Username and password do not match any user in this service");
     }
 
     @Test

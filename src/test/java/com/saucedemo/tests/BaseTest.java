@@ -20,7 +20,7 @@ public class BaseTest {
         loginPage = new LoginPage(driver);
     }
 
-    @AfterMethod
+    @AfterMethod(alwaysRun=true)
     public void closeBrowser() {
         driver.quit();
     }
