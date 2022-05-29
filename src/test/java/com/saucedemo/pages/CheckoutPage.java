@@ -4,7 +4,6 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class CheckoutPage extends BasePage {
 
@@ -18,8 +17,6 @@ public class CheckoutPage extends BasePage {
     private By firstNameField = By.id("first-name");
     private By lastNameField = By.id("last-name");
     private By errorMessage = By.xpath("//h3");
-
-    public static final String EXPECTED_PAGE_TITLE = "CHECKOUT: YOUR INFORMATION";
 
     public WebElement getCancelButton() {
         return driver.findElement(cancelButton);
@@ -62,7 +59,6 @@ public class CheckoutPage extends BasePage {
         return driver.findElement(errorMessage).getText();
     }
 
-    WebDriverWait wait = new WebDriverWait(driver, 10);
     public void waitCheckoutPageLoading() {
         wait.until(ExpectedConditions.urlToBe("https://www.saucedemo.com/checkout-step-one.html"));
     }

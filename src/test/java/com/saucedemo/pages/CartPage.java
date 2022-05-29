@@ -4,7 +4,6 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,9 +20,6 @@ public class CartPage extends BasePage {
     private By productName = By.cssSelector(".inventory_item_name");
     private By desc = By.cssSelector(".inventory_item_desc");
     private By price = By.cssSelector(".inventory_item_price");
-    private By removedItem = By.cssSelector(".removed_cart_item");
-
-    public static final String EXPECTED_PAGE_TITLE = "YOUR CART";
 
     public WebElement getContinueShoppingButton() {
         return driver.findElement(continueShoppingButton);
@@ -77,7 +73,6 @@ public class CartPage extends BasePage {
         return driver.findElement(price).getText();
     }
 
-    WebDriverWait wait = new WebDriverWait(driver, 10);
     public void waitCartPageLoading() {
         wait.until(ExpectedConditions.urlToBe("https://www.saucedemo.com/cart.html"));
     }
