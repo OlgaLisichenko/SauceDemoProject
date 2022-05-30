@@ -16,7 +16,7 @@ public class TestCheckout extends BaseTest {
         CheckoutPage checkoutPage = cartPage.clickCheckoutButton();
         checkoutPage.clickCancelButton();
         cartPage.waitCartPageLoading();
-        Assert.assertEquals(cartPage.getPageTitle(), CartPage.EXPECTED_PAGE_TITLE);
+        Assert.assertEquals(cartPage.getPageTitle(),reader.getCartPageTitle());
     }
 
     @Test //Проверка кнопки "Continue".
@@ -38,7 +38,7 @@ public class TestCheckout extends BaseTest {
         CheckoutPage checkoutPage = cartPage.clickCheckoutButton();
         checkoutPage.clickCartLink();
         cartPage.waitCartPageLoading();
-        Assert.assertEquals(cartPage.getPageTitle(), CartPage.EXPECTED_PAGE_TITLE);
+        Assert.assertEquals(cartPage.getPageTitle(), reader.getCartPageTitle());
     }
 
     @Test //Проверка нажатия кнопки "Continue" при незаполненном поле "Zip/Postal Code".

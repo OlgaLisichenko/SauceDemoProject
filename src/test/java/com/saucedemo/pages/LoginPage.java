@@ -4,7 +4,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
+import utils.PropertyReader;
 
 public class LoginPage extends BasePage{
     public LoginPage(WebDriver driver) {
@@ -16,11 +16,10 @@ public class LoginPage extends BasePage{
     private By loginButton = By.id("login-button");
     private By errorMessage = By.xpath("//h3");
 
-    public static final String STANDARD_USER = "standard_user";
-    public static final String DEFAULT_PASSWORD = "secret_sauce";
+    PropertyReader reader = new PropertyReader();
 
     public void openPage() {
-        driver.get("https://www.saucedemo.com/");
+        driver.get(reader.getLoginUrl());
     }
 
     public String Url() {
@@ -57,10 +56,9 @@ public class LoginPage extends BasePage{
     }
 
     public ProductsListPage loginWithDefaultUser() {
-        return login(STANDARD_USER, DEFAULT_PASSWORD);
+        return login(reader.getUsername(),reader.getPassword());
     }
 
-    WebDriverWait wait = new WebDriverWait(driver, 10);
     public void waitMessageEmptyPassword() {
         wait.until(ExpectedConditions.textToBe(errorMessage, "Epic sadface: Password is required"));
     }

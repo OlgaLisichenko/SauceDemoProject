@@ -4,7 +4,6 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class SideMenu extends BasePage{
 
@@ -24,7 +23,6 @@ public class SideMenu extends BasePage{
         return new LoginPage(driver);
     }
 
-    WebDriverWait wait = new WebDriverWait(driver, 10);
     public void waitElement() {
         wait.until(ExpectedConditions.visibilityOfElementLocated(leftMenu));
     }

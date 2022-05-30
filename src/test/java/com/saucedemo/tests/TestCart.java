@@ -15,7 +15,7 @@ public class TestCart extends BaseTest {
         CartPage cartPage = productsPage.clickCartLink();
         cartPage.clickContinueShoppingButton();
         productsPage.waitProductPageLoading();
-        Assert.assertEquals(productsPage.getPageTitle(), ProductsListPage.EXPECTED_PAGE_TITLE);
+        Assert.assertEquals(productsPage.getPageTitle(), reader.getProductsPageTitle());
     }
 
     @Test //Проверка кнопки "Checkout".
@@ -25,7 +25,7 @@ public class TestCart extends BaseTest {
         CartPage cartPage = productsPage.clickCartLink();
         CheckoutPage checkoutPage = cartPage.clickCheckoutButton();
         checkoutPage.waitCheckoutPageLoading();
-        Assert.assertEquals(checkoutPage.getPageTitle(), CheckoutPage.EXPECTED_PAGE_TITLE);
+        Assert.assertEquals(checkoutPage.getPageTitle(), reader.getCheckoutPageTitle());
     }
 
     @Test  //Проверка возможности добавления товара в корзину и его удаления.
@@ -45,7 +45,6 @@ public class TestCart extends BaseTest {
         Assert.assertEquals(cartPage.getDescription(), expectedDescription); //Проверка правильности отображения описания товара.
         Assert.assertEquals(cartPage.getPrice(), expectedPrice); //Проверка правильности отображения цены товара.
         cartPage.clickRemoveButton(0);
-        //Assert.assertFalse(cartPage.getRemovedItem().isDisplayed()); //Проверка на отсутствие информации о товаре после его удаления.
-        Assert.assertEquals(cartPage.getProductNamesList().size(), 0);
+        Assert.assertEquals(cartPage.getProductNamesList().size(), 0); //Проверка на отсутствие информации о товаре после его удаления.
     }
 }
