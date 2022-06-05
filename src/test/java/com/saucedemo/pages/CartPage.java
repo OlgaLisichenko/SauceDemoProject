@@ -3,6 +3,9 @@ package com.saucedemo.pages;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.FindBys;
+import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import java.util.ArrayList;
@@ -10,54 +13,56 @@ import java.util.List;
 
 public class CartPage extends BasePage {
 
+    @FindBys({
+            @FindBy(css = ".cart_item_label")
+    })
+    public List<WebElement> productList;
+    @FindBy(id = "continue-shopping")
+    public WebElement continueShoppingButton;
+    @FindBy(id = "checkout")
+    public WebElement checkoutButton;
+    @FindBy(xpath = "//button[text()='Remove']")
+    public WebElement removeButton;
+    @FindBy(css = ".inventory_item_desc")
+    public WebElement desc;
+    @FindBy(css = ".inventory_item_price")
+    public WebElement price;
+
+    private By productName = By.cssSelector(".inventory_item_name");
+
     public CartPage(WebDriver driver) {
         super(driver);
-    }
-    private By productList = By.cssSelector(".cart_item_label");
-    private By continueShoppingButton = By.id("continue-shopping");
-    private By checkoutButton = By.id("checkout");
-    private By removeButton = By.xpath("//button[text()='Remove']");
-    private By productName = By.cssSelector(".inventory_item_name");
-    private By desc = By.cssSelector(".inventory_item_desc");
-    private By price = By.cssSelector(".inventory_item_price");
-
-    public WebElement getContinueShoppingButton() {
-        return driver.findElement(continueShoppingButton);
+        PageFactory.initElements(driver, this);
     }
 
-    public List<WebElement> getProductsList() {
-        return driver.findElements(productList);
+    @Override
+    public CartPage isPageOpen() {
+        wait.until(ExpectedConditions.and(ExpectedConditions.visibilityOfElementLocated(By.id("continue-shopping")),
+                ExpectedConditions.visibilityOfElementLocated(By.id("checkout"))));
+        return this;
     }
 
     public List<String> getProductNamesList() {
         List<String> names = new ArrayList<>();
-        for (WebElement product : getProductsList()) {
+        for (WebElement product : productList) {
             names.add(product.findElement(productName).getText());
         }
         return names;
     }
 
     public ProductsListPage clickContinueShoppingButton() {
-        getContinueShoppingButton().click();
+       continueShoppingButton.click();
         return new ProductsListPage(driver);
     }
 
-    public WebElement getCheckoutButton() {
-        return driver.findElement(checkoutButton);
-    }
-
     public CheckoutPage clickCheckoutButton() {
-        getCheckoutButton().click();
+        checkoutButton.click();
         return new CheckoutPage(driver);
     }
 
-    public WebElement getRemoveButton() {
-        return driver.findElement(removeButton);
-    }
-
     public CartPage clickRemoveButton(int productNumberInList) {
-        getProductsList().get(productNumberInList);
-        getRemoveButton().click();
+        productList.get(productNumberInList);
+        removeButton.click();
         return this;
     }
 
@@ -66,11 +71,11 @@ public class CartPage extends BasePage {
     }
 
     public String getDescription() {
-        return driver.findElement(desc).getText();
+        return desc.getText();
     }
 
     public String getPrice() {
-        return driver.findElement(price).getText();
+        return price.getText();
     }
 
     public void waitCartPageLoading() {

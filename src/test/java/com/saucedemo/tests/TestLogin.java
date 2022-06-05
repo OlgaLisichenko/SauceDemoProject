@@ -1,5 +1,6 @@
 package com.saucedemo.tests;
 
+import com.saucedemo.User;
 import com.saucedemo.pages.ProductsListPage;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -9,14 +10,17 @@ public class TestLogin extends BaseTest {
     @Test
     public void testSuccessLogin() {
         loginPage.openPage();
+        loginPage.isPageOpen();
         ProductsListPage productsPage = loginPage.loginWithDefaultUser();
         productsPage.waitPageTitleLoading();
+        productsPage.isPageOpen();
         Assert.assertEquals(productsPage.getPageTitle(),reader.getProductsPageTitle());
     }
 
     @Test
     public void testEmptyPassword() {
         loginPage.openPage();
+        loginPage.isPageOpen();
         loginPage.setUserName(reader.getUsername()).setPassword("").clickLogin();
         loginPage.waitMessageEmptyPassword();
         Assert.assertEquals(loginPage.getErrorMessage(), "Epic sadface: Password is required");
@@ -25,7 +29,8 @@ public class TestLogin extends BaseTest {
     @Test
     public void testFailedLogin() {
         loginPage.openPage();
-        loginPage.login("aaaa", "1111");
+        loginPage.isPageOpen();
+        loginPage.login(new User("aaaa", "1111"));
         loginPage.waitMessageFailedLogin();
         Assert.assertEquals(loginPage.getErrorMessage(),
                 "Epic sadface: Username and password do not match any user in this service");
@@ -34,7 +39,8 @@ public class TestLogin extends BaseTest {
     @Test
     public void testEmptyUserName() {
         loginPage.openPage();
-        loginPage.login("", reader.getPassword());
+        loginPage.isPageOpen();
+        loginPage.login(new User("", reader.getPassword()));
         loginPage.waitMessageEmptyUser();
         Assert.assertEquals(loginPage.getErrorMessage(), "Epic sadface: Username is required");
     }
@@ -42,7 +48,8 @@ public class TestLogin extends BaseTest {
     @Test
     public void testLockedOutUser() {
         loginPage.openPage();
-        loginPage.login("locked_out_user", reader.getPassword());
+        loginPage.isPageOpen();
+        loginPage.login(new User("locked_out_user", reader.getPassword()));
         loginPage.waitMessageLockedOutUser();
         Assert.assertEquals(loginPage.getErrorMessage(), "Epic sadface: Sorry, this user has been locked out.");
     }
@@ -50,8 +57,10 @@ public class TestLogin extends BaseTest {
     @Test
     public void testPerformanceGlitchUser() {
         loginPage.openPage();
-        ProductsListPage productsPage = loginPage.login("performance_glitch_user", reader.getPassword());
+        loginPage.isPageOpen();
+        ProductsListPage productsPage = loginPage.login(new User("performance_glitch_user", reader.getPassword()));
         productsPage.waitProductPageLoading();
-        Assert.assertEquals(productsPage.getPageTitle(), "PRODUCTS");
+        productsPage.isPageOpen();
+        Assert.assertEquals(productsPage.getPageTitle(), reader.getProductsPageTitle());
     }
 }

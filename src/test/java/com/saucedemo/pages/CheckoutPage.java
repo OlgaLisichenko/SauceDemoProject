@@ -3,60 +3,63 @@ package com.saucedemo.pages;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
 public class CheckoutPage extends BasePage {
 
+    @FindBy(id = "cancel")
+    public WebElement cancelButton;
+    @FindBy(id = "continue")
+    public WebElement continueButton;
+    @FindBy(className = "shopping_cart_link")
+    public WebElement cartLink;
+    @FindBy(id = "first-name")
+    public WebElement firstNameField;
+    @FindBy(id = "last-name")
+    public WebElement lastNameField;
+    @FindBy(xpath = "//h3")
+    public WebElement errorMessage;
+
     public CheckoutPage(WebDriver driver) {
         super(driver);
+        PageFactory.initElements(driver, this);
     }
 
-    private By cancelButton = By.id("cancel");
-    private By continueButton = By.id("continue");
-    private By cartLink = By.className("shopping_cart_link");
-    private By firstNameField = By.id("first-name");
-    private By lastNameField = By.id("last-name");
-    private By errorMessage = By.xpath("//h3");
-
-    public WebElement getCancelButton() {
-        return driver.findElement(cancelButton);
+    @Override
+    public CheckoutPage isPageOpen() {
+        wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.cssSelector(".form_group")));
+        return this;
     }
 
     public CartPage clickCancelButton() {
-        getCancelButton().click();
+        cancelButton.click();
         return new CartPage(driver);
-    }
-
-    public WebElement getContinueButton() {
-        return driver.findElement(continueButton);
     }
 
     public CartPage clickContinueButton() {
-        getContinueButton().click();
+        continueButton.click();
         return new CartPage(driver);
     }
 
-    public WebElement getCartLink() {
-        return driver.findElement(cartLink);
-    }
-
     public CartPage clickCartLink() {
-        getCartLink().click();
+        cartLink.click();
         return new CartPage(driver);
     }
 
     public CheckoutPage setFirstName(String firstName) {
-        driver.findElement(firstNameField).sendKeys(firstName);
+        firstNameField.sendKeys(firstName);
         return this;
     }
 
     public CheckoutPage setLastName(String lastName) {
-        driver.findElement(lastNameField).sendKeys(lastName);
+        lastNameField.sendKeys(lastName);
         return this;
     }
 
     public String getErrorMessage() {
-        return driver.findElement(errorMessage).getText();
+        return errorMessage.getText();
     }
 
     public void waitCheckoutPageLoading() {
@@ -68,6 +71,6 @@ public class CheckoutPage extends BasePage {
     }
 
     public void waitErrorMessage() {
-        wait.until(ExpectedConditions.visibilityOfElementLocated(errorMessage));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//h3")));
     }
 }
