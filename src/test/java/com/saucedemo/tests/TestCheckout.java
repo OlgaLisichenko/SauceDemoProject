@@ -10,6 +10,7 @@ public class TestCheckout extends BaseTest {
 
     @Test //Проверка кнопки "Cancel".
     public void testCancelButton() {
+        System.out.println("Test Cancel button");
         loginPage.openPage();
         loginPage.isPageOpen();
         ProductsListPage productsPage = loginPage.loginWithDefaultUser();
@@ -25,6 +26,7 @@ public class TestCheckout extends BaseTest {
 
     @Test //Проверка кнопки "Continue".
     public void testContinueButton() {
+        System.out.println("Test Continue button");
         loginPage.openPage();
         loginPage.isPageOpen();
         ProductsListPage productsPage = loginPage.loginWithDefaultUser();
@@ -40,6 +42,7 @@ public class TestCheckout extends BaseTest {
 
     @Test //Проверка ссылки "Cart".
     public void testCartLink() {
+        System.out.println("Test cart link");
         loginPage.openPage();
         loginPage.isPageOpen();
         ProductsListPage productsPage = loginPage.loginWithDefaultUser();
@@ -55,6 +58,7 @@ public class TestCheckout extends BaseTest {
 
     @Test //Проверка нажатия кнопки "Continue" при незаполненном поле "Zip/Postal Code".
     public void testEmptyPostalCode() {
+        System.out.println("Test empty postal code");
         loginPage.openPage();
         loginPage.isPageOpen();
         ProductsListPage productsPage = loginPage.loginWithDefaultUser();

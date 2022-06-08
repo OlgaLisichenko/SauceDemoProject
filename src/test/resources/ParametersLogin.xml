@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Parameters">
+    <test name="Test Login">
+        <classes>
+            <class name="com.saucedemo.tests.TestParameters">
+                <parameter name="username" value="aaaaa"/>
+                <parameter name="password" value="22222"/>
+                <parameter name="expectedResult"
+                           value="Epic sadface: Username and password do not match any user in this service"/>
+            </class>
+        </classes>
+    </test>
+</suite>
