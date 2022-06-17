@@ -7,8 +7,9 @@ import org.testng.annotations.Test;
 
 public class TestLogout extends BaseTest {
 
-    @Test
+    @Test(retryAnalyzer = Retry.class)  //Почему-то этот тест не всегда работает, если запускать его в сьюте
     public void testLogout() {
+        System.out.println("Test logout");
         loginPage.openPage();
         loginPage.isPageOpen();
         ProductsListPage productsPage = loginPage.loginWithDefaultUser();

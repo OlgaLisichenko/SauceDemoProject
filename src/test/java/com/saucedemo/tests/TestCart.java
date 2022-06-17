@@ -10,6 +10,7 @@ public class TestCart extends BaseTest {
 
     @Test  //Проверка кнопки "Continue Shopping".
     public void testContinueShoppingButton() {
+        System.out.println("Test ContinueShopping button");
         loginPage.openPage();
         loginPage.isPageOpen();
         ProductsListPage productsPage = loginPage.loginWithDefaultUser();
@@ -23,6 +24,7 @@ public class TestCart extends BaseTest {
 
     @Test //Проверка кнопки "Checkout".
     public void testCheckoutButton() {
+        System.out.println("Test Checkout button");
         loginPage.openPage();
         loginPage.isPageOpen();
         ProductsListPage productsPage = loginPage.loginWithDefaultUser();
@@ -37,6 +39,7 @@ public class TestCart extends BaseTest {
 
     @Test  //Проверка возможности добавления товара в корзину и его удаления.
     public void testAddRemoveItem() {
+        System.out.println("Test add and remove item");
         loginPage.openPage();
         loginPage.isPageOpen();
         ProductsListPage productsPage = loginPage.loginWithDefaultUser();
