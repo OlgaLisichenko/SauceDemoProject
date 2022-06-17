@@ -3,60 +3,63 @@ package com.saucedemo.pages;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.FindBys;
+import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
+import utils.PropertyReader;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ProductsListPage extends BasePage {
 
-    public ProductsListPage(WebDriver driver) {
-        super(driver);
-    }
+    @FindBys({
+            @FindBy (css = ".inventory_item")
+    })
+    public List<WebElement> productsList;
+    @FindBy(tagName = "select")
+    public WebElement select;
+    @FindBy(id = "react-burger-menu-btn")
+    public WebElement menuButton;
+    @FindBy(css = ".shopping_cart_link")
+    public WebElement cartLink;
+    @FindBy(css = ".shopping_cart_badge")
+    public WebElement cartBadge;
 
-    private By menuButton = By.id("react-burger-menu-btn");
-    private By cartLink = By.className("shopping_cart_link");
-    private By addToCartButton = By.tagName("button");
-    private By cartBadge = By.cssSelector(".shopping_cart_badge");
+    private By addToCartButton = By.cssSelector(".btn.btn_primary.btn_small.btn_inventory");
     private By productName = By.cssSelector(".inventory_item_name");
     private By productDesc = By.cssSelector(".inventory_item_desc");
     private By price = By.cssSelector(".inventory_item_price");
-    private By productsList = By.cssSelector(".inventory_item");
-    private By select = By.tagName("select");
 
-    public WebElement getMenuButton() {
-        return driver.findElement(menuButton);
+    public ProductsListPage(WebDriver driver) {
+        super(driver);
+        PageFactory.initElements(driver, this);
+    }
+
+    @Override
+    public ProductsListPage isPageOpen() {
+        wait.until(ExpectedConditions.numberOfElementsToBe(By.cssSelector(".inventory_item"), 6));
+        return this;
     }
 
     public SideMenu clickMenuButton() {
-        getMenuButton().click();
+        menuButton.click();
         return new SideMenu(driver);
     }
 
-    public WebElement getCartLink() {
-        return driver.findElement(cartLink);
-    }
-
     public CartPage clickCartLink() {
-        getCartLink().click();
+        cartLink.click();
         return new CartPage(driver);
     }
 
-    public WebElement getCartBadge() {
-        return driver.findElement(cartBadge);
-    }
-
     public String numberCartBadge() {
-        return getCartBadge().getText();
-    }
-
-    public List<WebElement> getProducts() {
-        return driver.findElements(productsList);
+        return cartBadge.getText();
     }
 
     public WebElement getSelectedProduct(int index) {
-        return getProducts().get(index);
+        return productsList.get(index);
     }
 
     public WebElement getAddToCart(int index) {
@@ -81,7 +84,7 @@ public class ProductsListPage extends BasePage {
     }
 
     public Select getSelect() {
-        return new Select(driver.findElement(select));
+        return new Select(select);
     }
 
     public void selectValue(String value) {
@@ -90,7 +93,7 @@ public class ProductsListPage extends BasePage {
 
     public List<String> getProductsNames() {
         List<String> names = new ArrayList<>();
-        for (WebElement product: getProducts()) {
+        for (WebElement product: productsList) {
             names.add(product.findElement(productName).getText());
         }
         return names;
@@ -98,7 +101,7 @@ public class ProductsListPage extends BasePage {
 
     public List<Double> getProductsPrices() {
         List<Double> prices = new ArrayList<>();
-        for (WebElement product: getProducts()) {
+        for (WebElement product: productsList) {
             prices.add(Double.parseDouble(product.findElement(price).getText().replace("$", "")));
         }
         return prices;
@@ -108,8 +111,9 @@ public class ProductsListPage extends BasePage {
         wait.until(ExpectedConditions.urlToBe("https://www.saucedemo.com/inventory.html"));
     }
 
+    PropertyReader reader = new PropertyReader();
     public void waitPageTitleLoading() {
-        wait.until(ExpectedConditions.textToBe(title,"PRODUCTS"));
+        wait.until(ExpectedConditions.textToBe(title, reader.getProductsPageTitle()));
     }
 }
 

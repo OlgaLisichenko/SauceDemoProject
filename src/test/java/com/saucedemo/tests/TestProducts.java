@@ -12,8 +12,10 @@ public class TestProducts extends BaseTest{
     @Test // Проверка правильности сортировки по значениям дропдауна
     public void testSortingBySelector() {
         loginPage.openPage();
+        loginPage.isPageOpen();
         ProductsListPage productsPage = loginPage.loginWithDefaultUser();
         productsPage.waitProductPageLoading();
+        productsPage.isPageOpen();
 
         List<String> initialNames = productsPage.getProductsNames();
 

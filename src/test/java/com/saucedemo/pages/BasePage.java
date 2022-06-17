@@ -15,6 +15,8 @@ public abstract class BasePage {
         this.wait = new WebDriverWait(driver, 5);
     }
 
+    public abstract BasePage isPageOpen();
+
     public String getPageTitle() {
         return driver.findElement(title).getText();
     }
