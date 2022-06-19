@@ -1,22 +1,21 @@
 package com.saucedemo.tests;
 
-import com.saucedemo.pages.ProductsListPage;
+import com.saucedemo.tests.base.BaseTest;
+import io.qameta.allure.Description;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import java.util.Comparator;
 import java.util.List;
 
-public class TestProducts extends BaseTest{
+public class TestProducts extends BaseTest {
 
-    @Test // Проверка правильности сортировки по значениям дропдауна
+    @Test(description = "Product sorting")
+    @Description("Checking product sorting by selected value")
     public void testSortingBySelector() {
-        System.out.println("Test sorting by selector");
-        loginPage.openPage();
-        loginPage.isPageOpen();
-        ProductsListPage productsPage = loginPage.loginWithDefaultUser();
-        productsPage.waitProductPageLoading();
-        productsPage.isPageOpen();
+
+
+        loginSteps.loginWithStandardUser();
 
         List<String> initialNames = productsPage.getProductsNames();
 

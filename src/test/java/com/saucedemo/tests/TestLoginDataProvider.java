@@ -1,7 +1,7 @@
 package com.saucedemo.tests;
 
-import com.saucedemo.User;
-import com.saucedemo.pages.ProductsListPage;
+import com.saucedemo.tests.base.BaseTest;
+import io.qameta.allure.Description;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -17,14 +17,13 @@ public class TestLoginDataProvider extends BaseTest {
         };
     }
 
-    @Test(dataProvider = "Correct data")
+    @Test(dataProvider = "Correct data", description = "Login with correct data")
+    @Description("Checking login with correct data passed using the 'DataProvider' annotation")
     public void testLoginCorrectData(String username, String password, String expectedResult) {
-        System.out.println("Test correct data");
-        loginPage.openPage();
-        loginPage.isPageOpen();
-        ProductsListPage productsPage = loginPage.login(new User(username, password));
-        productsPage.waitProductPageLoading();
+        loginSteps.openingLoginPage();
+        loginPage.login(username, password);
         productsPage.isPageOpen();
+
         Assert.assertEquals(productsPage.getPageTitle(), reader.getProductsPageTitle(), expectedResult);
     }
 
@@ -42,13 +41,12 @@ public class TestLoginDataProvider extends BaseTest {
         };
     }
 
-    @Test(dataProvider = "Incorrect data")
+    @Test(dataProvider = "Incorrect data", description = "Login with incorrect data")
+    @Description("Checking login with incorrect data passed using the 'DataProvider' annotation")
     public void testLoginIncorrectData(String username, String password, String expectedResult) {
-        System.out.println("Test incorrect data");
-        loginPage.openPage();
-        loginPage.isPageOpen();
-        loginPage.login(new User(username, password));
-        loginPage.waitMessageFailedLogin();
+        loginSteps.openingLoginPage();
+        loginPage.login(username, password);
+
         Assert.assertEquals(loginPage.getErrorMessage(), expectedResult);
     }
 }

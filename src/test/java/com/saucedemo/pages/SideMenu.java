@@ -1,5 +1,7 @@
 package com.saucedemo.pages;
 
+import com.saucedemo.utils.AllureUtils;
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -18,13 +20,17 @@ public class SideMenu extends BasePage{
     }
 
     @Override
+    @Step("Waiting for Side menu to load")
     public SideMenu isPageOpen() {
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".bm-menu-wrap")));
+        AllureUtils.takeScreenshot(driver);
         return this;
     }
 
+    @Step("Waiting for Login page to load")
     public LoginPage clickLogoutLink() {
         logoutLink.click();
+        AllureUtils.takeScreenshot(driver);
         return new LoginPage(driver);
     }
 }

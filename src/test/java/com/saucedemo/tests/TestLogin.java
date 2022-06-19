@@ -1,72 +1,64 @@
 package com.saucedemo.tests;
 
-import com.saucedemo.User;
-import com.saucedemo.pages.ProductsListPage;
+import com.saucedemo.tests.base.BaseTest;
+import io.qameta.allure.Description;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
 public class TestLogin extends BaseTest {
 
-    @Test
+    @Test(description = "Success login")
+    @Description("Validation of login with standard user")
     public void testSuccessLogin() {
-        System.out.println("Test success login");
-        loginPage.openPage();
-        loginPage.isPageOpen();
-        ProductsListPage productsPage = loginPage.loginWithDefaultUser();
-        productsPage.waitPageTitleLoading();
-        productsPage.isPageOpen();
+        loginSteps.loginWithStandardUser();
+
         Assert.assertEquals(productsPage.getPageTitle(),reader.getProductsPageTitle());
     }
 
-    @Test
+    @Test(description = "Failed login with empty password")
+    @Description("Validation of login with empty password")
     public void testEmptyPassword() {
-        System.out.println("Test empty password");
-        loginPage.openPage();
-        loginPage.isPageOpen();
-        loginPage.setUserName(reader.getUsername()).setPassword("").clickLogin();
-        loginPage.waitMessageEmptyPassword();
+        loginSteps.openingLoginPage();
+        loginPage.login(reader.getUsername(), "");
+
         Assert.assertEquals(loginPage.getErrorMessage(), "Epic sadface: Password is required");
     }
 
-    @Test
+    @Test(description = "Failed login with incorrect credentials")
+    @Description("Validation of login with incorrect credentials")
     public void testFailedLogin() {
-        System.out.println("Test failed login");
-        loginPage.openPage();
-        loginPage.isPageOpen();
-        loginPage.login(new User("aaaa", "1111"));
-        loginPage.waitMessageFailedLogin();
+        loginSteps.openingLoginPage();
+        loginPage.login("aaaa", "1111");
+
         Assert.assertEquals(loginPage.getErrorMessage(),
                 "Epic sadface: Username and password do not match any user in this service");
     }
 
-    @Test
+    @Test(description = "Failed login with empty username")
+    @Description("Validation of login with empty username")
     public void testEmptyUserName() {
-        System.out.println("Test empty username");
-        loginPage.openPage();
-        loginPage.isPageOpen();
-        loginPage.login(new User("", reader.getPassword()));
-        loginPage.waitMessageEmptyUser();
+        loginSteps.openingLoginPage();
+        loginPage.login("", reader.getPassword());
+
         Assert.assertEquals(loginPage.getErrorMessage(), "Epic sadface: Username is required");
     }
 
-    @Test
+    @Test(description = "Login with locked out user")
+    @Description("Validation of login with username 'locked_out_user'")
     public void testLockedOutUser() {
-        System.out.println("Test locked out user");
-        loginPage.openPage();
-        loginPage.isPageOpen();
-        loginPage.login(new User("locked_out_user", reader.getPassword()));
-        loginPage.waitMessageLockedOutUser();
+        loginSteps.openingLoginPage();
+        loginPage.login("locked_out_user", reader.getPassword());
+
         Assert.assertEquals(loginPage.getErrorMessage(), "Epic sadface: Sorry, this user has been locked out.");
     }
 
-    @Test
+    @Test(description = "Login with performance glitch")
+    @Description("Validation of login with username 'performance_glitch_user'")
     public void testPerformanceGlitchUser() {
-        System.out.println("Test performance glitch user");
-        loginPage.openPage();
-        loginPage.isPageOpen();
-        ProductsListPage productsPage = loginPage.login(new User("performance_glitch_user", reader.getPassword()));
-        productsPage.waitProductPageLoading();
+        loginSteps.openingLoginPage();
+        loginPage.login("performance_glitch_user", reader.getPassword());
         productsPage.isPageOpen();
+
         Assert.assertEquals(productsPage.getPageTitle(), reader.getProductsPageTitle());
     }
 }
