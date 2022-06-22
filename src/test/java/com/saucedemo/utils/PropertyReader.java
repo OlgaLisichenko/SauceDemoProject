@@ -1,4 +1,4 @@
-package utils;
+package com.saucedemo.utils;
 
 import java.io.IOException;
 import java.util.Properties;
@@ -34,6 +34,10 @@ public class PropertyReader {
 
     public String getLoginUrl() {
         return properties.getProperty("login.url");
+    }
+
+    public String getCartPageUrl() {
+        return properties.getProperty("cartPage.url");
     }
 
     public String getCartPageTitle() {

@@ -1,4 +1,4 @@
-package com.saucedemo.tests;
+package com.saucedemo.tests.base;
 
 import org.testng.IRetryAnalyzer;
 import org.testng.ITestResult;
@@ -12,7 +12,7 @@ public class Retry implements IRetryAnalyzer {
             if (attempt < MAX_RETRY) {
                 attempt ++;
                 iTestResult.setStatus(ITestResult.FAILURE);
-                System.out.println("Retrying...");
+                System.out.println("-----Retrying-----");
                 return true;
             } else {
                 iTestResult.setStatus(ITestResult.FAILURE);

@@ -1,24 +1,29 @@
 package com.saucedemo.pages;
 
-import com.saucedemo.User;
-import org.openqa.selenium.By;
+import com.saucedemo.utils.AllureUtils;
+import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import utils.PropertyReader;
+import com.saucedemo.utils.PropertyReader;
 
 public class LoginPage extends BasePage{
 
     @FindBy(id = "user-name")
     public WebElement userNameField;
+
     @FindBy(id = "password")
     public WebElement passwordField;
+
     @FindBy(id = "login-button")
     public WebElement loginButton;
+
     @FindBy(xpath = "//h3")
     public WebElement errorMessage;
+
+    PropertyReader reader = new PropertyReader();
 
     public LoginPage(WebDriver driver) {
         super(driver);
@@ -26,13 +31,14 @@ public class LoginPage extends BasePage{
     }
 
     @Override
+    @Step("Waiting for Login page to load")
     public LoginPage isPageOpen() {
         wait.until(ExpectedConditions.urlToBe(reader.getLoginUrl()));
+        AllureUtils.takeScreenshot(driver);
         return this;
     }
 
-    PropertyReader reader = new PropertyReader();
-
+    @Step("Opening www.saucedemo.com")
     public void openPage() {
         driver.get(reader.getLoginUrl());
     }
@@ -51,7 +57,10 @@ public class LoginPage extends BasePage{
         return this;
     }
 
+    @Step("Getting error message")
     public String getErrorMessage() {
+        wait.until(ExpectedConditions.visibilityOf(errorMessage));
+        AllureUtils.takeScreenshot(driver);
         return errorMessage.getText();
     }
 
@@ -60,27 +69,15 @@ public class LoginPage extends BasePage{
         return new ProductsListPage(driver);
     }
 
-    public ProductsListPage login(User user) {
-        return setUserName(user.getUsername()).setPassword(user.getPassword()).clickLogin();
+    @Step("Login with username '{username}', password '{password}'")
+    public ProductsListPage login(String username, String password) {
+        setUserName(username).setPassword(password).clickLogin();
+        return new ProductsListPage(driver);
     }
 
-    public ProductsListPage loginWithDefaultUser() {
-        return login(new User(reader.getUsername(),reader.getPassword()));
-    }
-
-    public void waitMessageEmptyPassword() {
-        wait.until(ExpectedConditions.textToBe(By.xpath("//h3"), "Epic sadface: Password is required"));
-    }
-
-    public void waitMessageLockedOutUser() {
-        wait.until(ExpectedConditions.visibilityOf(errorMessage));
-    }
-
-    public void waitMessageEmptyUser() {
-        wait.until(ExpectedConditions.textToBe(By.xpath("//h3"), "Epic sadface: Username is required"));
-    }
-
-    public void waitMessageFailedLogin() {
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//h3")));
+    @Step("Login with standard user")
+    public ProductsListPage loginWithStandardUser() {
+        login(reader.getUsername(),reader.getPassword());
+        return new ProductsListPage(driver);
     }
 }
