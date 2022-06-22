@@ -60,4 +60,5 @@ public class TestCart extends BaseTest {
         cartPage.clickRemoveButton(0);
         Assert.assertEquals(cartPage.getProductNamesList().size(), 0); //Проверка на отсутствие информации о товаре после его удаления.
     }
+
 }
