@@ -18,12 +18,15 @@ public class CheckoutPageSteps {
     @Step("Opening and loading Checkout page")
     public CheckoutPageSteps openingCheckoutPage() {
         loginPage.openPage();
+
         ProductsListPage productsPage = loginPage
                 .isPageOpen()
                 .loginWithStandardUser();
+
         CartPage cartPage = productsPage
                 .isPageOpen()
                 .clickCartLink();
+
         CheckoutPage checkoutPage = cartPage
                 .isPageOpen()
                 .clickCheckoutButton();

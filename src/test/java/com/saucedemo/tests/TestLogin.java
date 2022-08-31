@@ -1,5 +1,6 @@
 package com.saucedemo.tests;
 
+import com.saucedemo.User;
 import com.saucedemo.tests.base.BaseTest;
 import io.qameta.allure.Description;
 import org.testng.Assert;
@@ -19,7 +20,7 @@ public class TestLogin extends BaseTest {
     @Description("Validation of login with empty password")
     public void testEmptyPassword() {
         loginSteps.openingLoginPage();
-        loginPage.login(reader.getUsername(), "");
+        loginPage.login(new User(reader.getUsername(), ""));
 
         Assert.assertEquals(loginPage.getErrorMessage(), "Epic sadface: Password is required");
     }
@@ -28,7 +29,8 @@ public class TestLogin extends BaseTest {
     @Description("Validation of login with incorrect credentials")
     public void testFailedLogin() {
         loginSteps.openingLoginPage();
-        loginPage.login("aaaa", "1111");
+        loginPage.login(new User("AT_Login " + faker.name().username(),
+                                 "AT_Login " + faker.code().ean8()));
 
         Assert.assertEquals(loginPage.getErrorMessage(),
                 "Epic sadface: Username and password do not match any user in this service");
@@ -38,7 +40,7 @@ public class TestLogin extends BaseTest {
     @Description("Validation of login with empty username")
     public void testEmptyUserName() {
         loginSteps.openingLoginPage();
-        loginPage.login("", reader.getPassword());
+        loginPage.login(new User("", reader.getPassword()));
 
         Assert.assertEquals(loginPage.getErrorMessage(), "Epic sadface: Username is required");
     }
@@ -47,7 +49,7 @@ public class TestLogin extends BaseTest {
     @Description("Validation of login with username 'locked_out_user'")
     public void testLockedOutUser() {
         loginSteps.openingLoginPage();
-        loginPage.login("locked_out_user", reader.getPassword());
+        loginPage.login(new User("locked_out_user", reader.getPassword()));
 
         Assert.assertEquals(loginPage.getErrorMessage(), "Epic sadface: Sorry, this user has been locked out.");
     }
@@ -56,7 +58,7 @@ public class TestLogin extends BaseTest {
     @Description("Validation of login with username 'performance_glitch_user'")
     public void testPerformanceGlitchUser() {
         loginSteps.openingLoginPage();
-        loginPage.login("performance_glitch_user", reader.getPassword());
+        loginPage.login(new User("performance_glitch_user", reader.getPassword()));
         productsPage.isPageOpen();
 
         Assert.assertEquals(productsPage.getPageTitle(), reader.getProductsPageTitle());

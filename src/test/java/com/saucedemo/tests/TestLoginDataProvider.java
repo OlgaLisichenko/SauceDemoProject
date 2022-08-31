@@ -1,5 +1,6 @@
 package com.saucedemo.tests;
 
+import com.saucedemo.User;
 import com.saucedemo.tests.base.BaseTest;
 import io.qameta.allure.Description;
 import org.testng.Assert;
@@ -21,7 +22,7 @@ public class TestLoginDataProvider extends BaseTest {
     @Description("Checking login with correct data passed using the 'DataProvider' annotation")
     public void testLoginCorrectData(String username, String password, String expectedResult) {
         loginSteps.openingLoginPage();
-        loginPage.login(username, password);
+        loginPage.login(new User(username, password));
         productsPage.isPageOpen();
 
         Assert.assertEquals(productsPage.getPageTitle(), reader.getProductsPageTitle(), expectedResult);
@@ -45,7 +46,7 @@ public class TestLoginDataProvider extends BaseTest {
     @Description("Checking login with incorrect data passed using the 'DataProvider' annotation")
     public void testLoginIncorrectData(String username, String password, String expectedResult) {
         loginSteps.openingLoginPage();
-        loginPage.login(username, password);
+        loginPage.login(new User(username, password));
 
         Assert.assertEquals(loginPage.getErrorMessage(), expectedResult);
     }

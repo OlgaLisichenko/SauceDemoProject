@@ -1,5 +1,6 @@
 package com.saucedemo.tests;
 
+import com.saucedemo.User;
 import com.saucedemo.tests.base.BaseTest;
 import com.saucedemo.tests.base.Retry;
 import io.qameta.allure.Description;
@@ -12,7 +13,7 @@ public class TestRetry extends BaseTest {
     @Description("Checking login with performance glitch using 'retryAnalyzer'")
     public void testRetry() {
         loginSteps.openingLoginPage();
-        loginPage.login("performance_glitch_user", reader.getPassword());
+        loginPage.login(new User("performance_glitch_user", reader.getPassword()));
         productsPage.isPageOpen();
 
         Assert.assertEquals(productsPage.getPageTitle(), reader.getProductsPageTitle());

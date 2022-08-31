@@ -40,7 +40,9 @@ public class TestCheckout extends BaseTest {
     @Description("Check of clicking 'Continue' button with empty 'Zip/Postal Code' field")
     public void testEmptyPostalCode() {
         checkoutPageSteps.openingCheckoutPage();
-        checkoutPage.setFirstName("James").setLastName("Bond").clickContinueButton();
+        checkoutPage.setFirstName("AT_FirstName " + faker.name().firstName())
+                    .setLastName("AT_LastName " + faker.name().lastName())
+                    .clickContinueButton();
 
         Assert.assertEquals(checkoutPage.getErrorMessage(), "Error: Postal Code is required");
     }

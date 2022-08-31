@@ -17,9 +17,11 @@ public class CartPageSteps {
     @Step("Opening and loading Cart page")
     public CartPageSteps openingCartPage() {
         loginPage.openPage();
+
         ProductsListPage productsPage = loginPage
                 .isPageOpen()
                 .loginWithStandardUser();
+
         CartPage cartPage = productsPage
                 .isPageOpen()
                 .clickCartLink();

@@ -1,9 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="All tests" parallel="tests" thread-count="4">
+<suite name="All tests" parallel="tests" thread-count="2">
     <test name="All tests">
-        <packages>
-            <package name="com.saucedemo.tests"/>
-        </packages>
+        <classes>
+            <class name="com.saucedemo.tests.TestCart"></class>
+            <class name="com.saucedemo.tests.TestCheckout"></class>
+            <class name="com.saucedemo.tests.TestLogin"></class>
+            <class name="com.saucedemo.tests.TestLoginDataProvider"></class>
+            <class name="com.saucedemo.tests.TestLogout"></class>
+            <class name="com.saucedemo.tests.TestParameters"></class>
+            <class name="com.saucedemo.tests.TestProducts"></class>
+            <class name="com.saucedemo.tests.TestRetry"></class>
+        </classes>
     </test>
 </suite>
