@@ -36,17 +36,17 @@ public class TestCart extends BaseTest {
 
         productsPage.clickAddToCart(5);
 
-        Assert.assertEquals(productsPage.numberCartBadge(), "1");  //Проверка отображения количества товаров в корзине.
+        Assert.assertEquals(productsPage.numberCartBadge(), "1");  //Checking the display of the number of products in the basket
 
         productsPage.clickCartLink();
         cartPage.isPageOpen();
 
-        Assert.assertEquals(cartPage.getName(), expectedProductName);       //Проверка правильности отображения названия товара.
-        Assert.assertEquals(cartPage.getDescription(), expectedDescription);//Проверка правильности отображения описания товара.
-        Assert.assertEquals(cartPage.getPrice(), expectedPrice);            //Проверка правильности отображения цены товара.
+        Assert.assertEquals(cartPage.getName(), expectedProductName);       //Checking the correctness of the display of the product name
+        Assert.assertEquals(cartPage.getDescription(), expectedDescription);//Checking whether the product description is displayed correctly
+        Assert.assertEquals(cartPage.getPrice(), expectedPrice);            //Checking the correctness of the display of the product price
 
         cartPage.clickRemoveButton(0);
 
-        Assert.assertEquals(cartPage.getSizeProductList(),0); //Проверка отсутствия товара в корзине после его удаления.
+        Assert.assertEquals(cartPage.getSizeProductList(),0); //Checking the absence of an item in the cart after it is deleted
     }
 }

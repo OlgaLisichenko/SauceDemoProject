@@ -1,5 +1,6 @@
 package com.saucedemo.tests;
 
+import com.saucedemo.User;
 import com.saucedemo.tests.base.BaseTest;
 import io.qameta.allure.Description;
 import org.testng.Assert;
@@ -16,7 +17,7 @@ public class TestParameters extends BaseTest {
                            @Optional("11111") String password,
                            @Optional("Epic sadface: Username is required") String expectedResult) {
         loginSteps.openingLoginPage();
-        loginPage.login(username, password);
+        loginPage.login(new User(username, password));
 
         Assert.assertEquals(loginPage.getErrorMessage(), expectedResult);
     }

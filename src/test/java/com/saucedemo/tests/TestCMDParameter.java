@@ -1,5 +1,6 @@
 package com.saucedemo.tests;
 
+import com.saucedemo.User;
 import com.saucedemo.tests.base.BaseTest;
 import io.qameta.allure.Description;
 import org.testng.Assert;
@@ -15,7 +16,7 @@ public class TestCMDParameter extends BaseTest {
         System.out.println("Parameter name: " + System.getProperty("parameter"));
 
         loginSteps.openingLoginPage();
-        loginPage.login(name, reader.getPassword());
+        loginPage.login(new User(name, reader.getPassword()));
         productsPage.isPageOpen();
 
         Assert.assertEquals(productsPage.getPageTitle(), reader.getProductsPageTitle());

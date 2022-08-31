@@ -23,6 +23,7 @@ public class LoginSteps {
     @Step("Login with standard user and loading Products page")
     public LoginSteps loginWithStandardUser() {
         loginPage.openPage();
+
         ProductsListPage productsPage = loginPage
                 .isPageOpen()
                 .loginWithStandardUser();

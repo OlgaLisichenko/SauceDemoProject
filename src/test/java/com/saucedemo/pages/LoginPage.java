@@ -1,7 +1,9 @@
 package com.saucedemo.pages;
 
+import com.saucedemo.User;
 import com.saucedemo.utils.AllureUtils;
 import io.qameta.allure.Step;
+import lombok.extern.log4j.Log4j2;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -9,6 +11,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import com.saucedemo.utils.PropertyReader;
 
+@Log4j2
 public class LoginPage extends BasePage{
 
     @FindBy(id = "user-name")
@@ -40,6 +43,7 @@ public class LoginPage extends BasePage{
 
     @Step("Opening www.saucedemo.com")
     public void openPage() {
+        log.info("Navigate to {}", reader.getLoginUrl());
         driver.get(reader.getLoginUrl());
     }
 
@@ -48,11 +52,13 @@ public class LoginPage extends BasePage{
     }
 
     public LoginPage setUserName(String userName) {
+        log.info("Set {} like username for login", userName);
         userNameField.sendKeys(userName);
         return this;
     }
 
     public LoginPage setPassword(String password) {
+        log.info("Set {} like password for login", password);
         passwordField.sendKeys(password);
         return this;
     }
@@ -69,15 +75,14 @@ public class LoginPage extends BasePage{
         return new ProductsListPage(driver);
     }
 
-    @Step("Login with username '{username}', password '{password}'")
-    public ProductsListPage login(String username, String password) {
-        setUserName(username).setPassword(password).clickLogin();
-        return new ProductsListPage(driver);
+    @Step("Login with User '{user}'")
+    public ProductsListPage login(User user) {
+        return setUserName(user.getUsername()).setPassword(user.getPassword()).clickLogin();
     }
 
     @Step("Login with standard user")
     public ProductsListPage loginWithStandardUser() {
-        login(reader.getUsername(),reader.getPassword());
+        login(new User(reader.getUsername(),reader.getPassword()));
         return new ProductsListPage(driver);
     }
 }

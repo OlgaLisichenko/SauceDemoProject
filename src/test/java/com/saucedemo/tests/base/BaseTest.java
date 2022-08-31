@@ -1,4 +1,5 @@
 package com.saucedemo.tests.base;
+import com.github.javafaker.Faker;
 import com.saucedemo.steps.CartPageSteps;
 import com.saucedemo.steps.CheckoutPageSteps;
 import com.saucedemo.pages.*;
@@ -10,6 +11,8 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import org.testng.ITestContext;
 import org.testng.annotations.*;
 import com.saucedemo.utils.PropertyReader;
+
+import java.util.Locale;
 
 @Listeners(TestListener.class)
 public class BaseTest {
@@ -23,6 +26,7 @@ public class BaseTest {
     protected LoginSteps loginSteps;
     protected CartPageSteps cartPageSteps;
     protected CheckoutPageSteps checkoutPageSteps;
+    protected Faker faker;
 
     @BeforeMethod(alwaysRun = true, description = "Opening Browser")
     public void setup(ITestContext context) {
@@ -40,6 +44,7 @@ public class BaseTest {
         loginSteps = new LoginSteps(driver);
         cartPageSteps = new CartPageSteps(driver);
         checkoutPageSteps = new CheckoutPageSteps(driver);
+        faker = new Faker(new Locale("en-US"));
     }
 
     @AfterMethod(alwaysRun = true, description = "Closing Browser")
